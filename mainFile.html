@@ -1,0 +1,682 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>wordlewordfinder</title>
+	<style>
+
+		body {
+			position:  absolute;
+			background-color: black;
+			margin: none;
+			font-family: Arial;
+			color: white;
+		}
+
+		.headDevider {
+			background-color: #3a3a3c;
+			position: absolute;
+			top: 90px;
+			left: 0px;
+			width: 1440px;
+			height:  5px;
+		}
+		.title {
+			position: absolute;
+			color: white;
+			font-size: 50px;
+			width: 1440px;
+			top: 13px;
+			text-align: center;
+			font-weight: bold;
+		}
+		.button {
+			position: absolute;
+			border-width: 3px;
+			border-color: #3a3a3c;
+			border-style: solid;
+			border-radius: 15px;
+			width: 150px;
+			height: 35px;
+			text-align: center;
+			padding-top: 5px;
+			font-size: 25px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.reset {
+			background-color: #b59f42;
+			left: 100px;
+			top: 20px;
+		}
+
+		.submit {
+			background-color: #528d52;
+			width: 200px;
+			left: 1150px;
+			top: 20px;
+		}
+		.add {
+			border-style: none;
+			background-color: #3a3a3c;
+			left: 40px;
+			height: 90px;
+			width: 670px;
+			font-size: 75px;
+			font-weight: normal;
+			padding-top: 0px;
+		}
+		.tableHead {
+			position: absolute;
+			border-style: none;
+			background-color: #3a3a3c;
+			left: 40px;
+			height: 45px;
+			width: 1360px;
+			top: 110px;
+			font-size: 75px;
+			font-weight: normal;
+			border-radius: 15px;
+			font-size: 20px;
+			padding-top: 15px;
+		}
+		.tableText {
+			font-size: 25px;
+			position: absolute;
+			left: 75px; 
+			width: 100px;
+		}
+
+		.square {
+			position: absolute;
+			width: 25px;
+			height: 25px;
+		}
+
+		.property {
+			position: absolute;
+			border-style: none;
+			background-color: #3a3a3c;
+			left: 40px;
+			height: 90px;
+			width: 1360px;
+			font-size: 75px;
+			font-weight: normal;
+			border-radius: 15px;
+		}
+		.select {
+			position: absolute;
+			background-color: transparent;
+			border-style: none;
+			color: white;
+			font-size: 50px;
+			cursor: pointer;
+			outline: none;
+			top: 15px;
+		}
+		.letter {
+			left: 80px;
+		}
+		.amount {
+			left: 285px;
+			font-size: 25px;
+			top: 30px;
+			text-align: center;
+		}
+
+		.position {
+			left:  550px;
+			top: 15px;
+			width: 60px;
+			height: 60px;
+			background-color: #b59f42;
+			border-style: none;
+			border-radius: 0px;
+			padding-top: 0px;
+		}
+		.remove {
+			position: absolute;
+			left: 1300px;
+			top:  30px;
+			width: 50px;
+			height: 50px;
+			font-size: 30px;
+			cursor: pointer;
+		}
+
+		.text {
+			font-size: 25px;
+			position: absolute;
+			left: 1085px;
+			cursor: pointer;
+		}
+		.includeAll {
+			font-size: 25px;
+			position: absolute;
+			left: 1050px;
+			transform: scale(1.5);
+			cursor: pointer;
+		}
+		.excludeAll {
+			font-size: 25px;
+			position: absolute;
+			left: 1050px;
+			transform: scale(1.5);
+			cursor: pointer;
+		}
+
+		#results {
+			background-color: black;
+			width: 1440px;
+			height: 6000px;
+			position: absolute;
+			top: 95px;
+			display: none;
+		}
+
+		table {
+			position: absolute;
+			top:  20px;
+			width: 95%;
+			left: 2.5%;
+		}
+
+		table, td, th {
+			font-size: 40px;
+			text-align: center;
+			border-color: rgba(255,255,255,0.5);
+			border-style: solid;
+			border-collapse: collapse;
+		}
+
+		td, th {
+			width: 31.6%;
+		}
+
+		#resultTable {
+			position: absolute;
+			top: 75px;
+		}
+	</style>
+</head>
+<body>
+	<div class = "title">Wordle Word Finder</div>
+	<div class = "button reset" onclick="reset()">Reset</div>
+	<div class = "button submit" onclick="find()"> Find Words </div>
+	<div class = "headDevider"></div>
+	<div class = "tableHead">
+		<div class = "tableText">Letter</div>
+		<div class = "tableText" style = "left: 300px">Amount</div>
+		<div class = "tableText" style = "left: 680px">Position</div>
+		<div class = "tableText" style = "left: 1000px">Include</div>
+		<div class = "square" style = "left: 1090px; background-color: #528d52;"></div>
+		<div class = "tableText" style = "left: 1150px">Exclude</div>
+		<div class = "square" style = "left: 1250px; background-color: #b59f42;"></div>
+	</div>
+	<div id = "allProperty">
+		<div class= "property" style = "top: 190px"> 
+			<select class = "select letter">
+				<option value = "a">A</option>
+				<option value = "b">B</option>
+				<option value = "c">C</option>
+				<option value = "d">D</option>
+				<option value = "e">E</option>
+				<option value = "f">F</option>
+				<option value = "g">G</option>
+				<option value = "h">H</option>
+				<option value = "i">I</option>
+				<option value = "j">J</option>
+				<option value = "k">K</option>
+				<option value = "l">L</option>
+				<option value = "m">M</option>
+				<option value = "n">N</option>
+				<option value = "o">O</option>
+				<option value = "p">P</option>
+				<option value = "q">Q</option>
+				<option value = "r">R</option>
+				<option value = "s">S</option>
+				<option value = "t">T</option>
+				<option value = "u">U</option>
+				<option value = "v">V</option>
+				<option value = "w">W</option>
+				<option value = "x">X</option>
+				<option value = "y">Y</option>
+				<option value = "z">Z</option>
+			</select>
+			<select class = "select amount">
+				<option value = 0> None </option>
+				<option value = 1> At Least 1</option>
+				<option value = 2> At Least 2</option>
+				<option value = 3> At Least 3</option>
+				<option value = 4> At Least 4</option>
+				<option value = 5> At Least 5</option>
+			</select>
+			<div class = "position button" style="left: 520px" onclick="positionVal (this.id)"></div>
+			<div class = "position button" style="left: 610px" onclick="positionVal (this.id)"></div>
+			<div class = "position button" style="left: 700px" onclick="positionVal (this.id)"></div>
+			<div class = "position button" style="left: 790px" onclick="positionVal (this.id)"></div>
+			<div class = "position button" style="left: 880px" onclick="positionVal (this.id)"></div>
+			<div class = "text" style="top: 10px" onclick="includeAll(this.parentElement.children[11].id[6], true)">Include All</div>
+			<input type="checkbox" class="includeAll" style="top: 15px" onclick="includeAll(this.parentElement.children[11].id[6], false)">
+			<div class = "text" style="top: 50px" onclick="excludeAll(this.parentElement.children[11].id[6], true)">Exclude All</div>
+			<input type="checkbox" class="excludeAll" style="top: 55px" onclick="excludeAll(this.parentElement.children[11].id[6], false)">
+			<div class = "remove" onclick="remove (this.id)"> X </div>
+		</div>
+	</div>
+	<div class= "button add" style = "top: 295px" onClick = "addProperty ()"> + </div>
+	<div class= "button add word" style = "padding-top: 25px; height: 65px;left: 730px;top: 295px; font-size: 30px;" onClick = "addWord ()"> Add Word </div>
+
+	<div id = results>
+		<div class = "title" style = "font-size: 40px;">Matching words</div>
+		<table id = "resultTable">
+			
+		</table>
+		
+	</div>
+
+</body>
+<script src="variable_Storage.js"></script>
+
+<script type="text/javascript">
+
+	var property = []
+
+	var newProperty = document.getElementsByClassName ("property") [0].cloneNode(true)
+
+	var matchingWords = word
+
+	function addWord () {
+		var wordAdding = prompt("What word to add?", "crane")
+		var startingProperty = document.getElementById("allProperty").children.length
+		wordAdding = wordAdding.toLowerCase()
+		var actualG = 0
+		for (g = 0; g<wordAdding.length; g++) {
+			if (wordAdding[g].match(/[a-z]/i)){
+				addProperty()
+				document.getElementsByClassName("property")[startingProperty+actualG].children[0].value = wordAdding[g]
+				actualG++
+			}
+		}
+	}
+
+	function reset () {
+		matchingWords = word
+		document.getElementById ("results").style.display = "none"
+		document.getElementsByClassName ("button submit")[0].innerHTML = "Find Words"
+		if (document.getElementsByClassName ("button reset")[0].innerHTML == "Reset") {
+			document.getElementById ("allProperty").innerHTML = ""
+			positionChange ()
+			idAdder ()
+		} else {
+			document.getElementsByClassName ("button reset")[0].innerHTML = "Reset"
+		}
+	}
+
+	function includeAll (x, reverse){
+		isTrue = (document.getElementsByClassName("includeAll")[x].checked != reverse)
+		if (isTrue) {
+			for (i = 0; i<5; i++){
+				if (document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor == "rgb(181, 159, 66)") {
+					document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor = "#528d52"
+				}
+			}
+		} else {
+			for (i = 0; i<5; i++){
+				if (document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor != "rgb(181, 159, 66)") {
+					document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor = "#b59f42"
+				}
+			}
+		}
+	}
+
+	function excludeAll (x, reverse){
+		isTrue = (document.getElementsByClassName("excludeAll")[x].checked != reverse)
+		if (isTrue) {
+			for (i = 0; i<5; i++){
+				if (document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor != "rgb(181, 159, 66)") {
+					document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor = "#b59f42"
+				}
+			}
+		} else {
+			for (i = 0; i<5; i++){
+				if (document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor == "rgb(181, 159, 66)") {
+					document.getElementById ("allProperty").children[x].children[2+i].style.backgroundColor = "#528d52"
+				}
+			}
+		}
+	}
+
+	function includeExclude () {
+		for (i = 0; i<document.getElementById("allProperty").children.length; i++) {
+			var includeExclude = 0
+			for (j = 0; j<5; j++) {
+				if (document.getElementById ("allProperty").children[i].children[2+j].style.backgroundColor == "rgb(181, 159, 66)"){
+					includeExclude--
+				} else {
+					includeExclude++
+				}
+			}
+			if (includeExclude == 5) {
+				document.getElementsByClassName("includeAll")[i].checked = true
+				document.getElementsByClassName("excludeAll")[i].checked = false
+			} else if (includeExclude == -5) {
+				document.getElementsByClassName("excludeAll")[i].checked = true
+				document.getElementsByClassName("includeAll")[i].checked = false
+			} else {
+				document.getElementsByClassName("includeAll")[i].checked = false
+				document.getElementsByClassName("excludeAll")[i].checked = false
+			}
+			var doc = document.getElementsByClassName("select amount")[i].children
+			var pdoc = document.getElementsByClassName("select amount")[i]
+			var amountSelected = (includeExclude+5)/2
+			switch (amountSelected) {
+				case 0:
+					doc[0].disabled = false
+					doc[1].disabled = true
+					doc[2].disabled = true
+					doc[3].disabled = true
+					doc[4].disabled = true
+					doc[5].disabled = true
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 0
+					}
+					break;
+				case 1:
+					doc[0].disabled = true
+					doc[1].disabled = false
+					doc[2].disabled = true
+					doc[3].disabled = true
+					doc[4].disabled = true
+					doc[5].disabled = true
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 1
+					} else if (pdoc.value == 0) {
+						pdoc.value = 1
+					}
+					break;
+				case 2:
+					doc[0].disabled = true
+					doc[1].disabled = false
+					doc[2].disabled = false
+					doc[3].disabled = true
+					doc[4].disabled = true
+					doc[5].disabled = true
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 2
+					} else if (pdoc.value == 0) {
+						pdoc.value = 1
+					}
+					break;
+				case 3:
+					doc[0].disabled = true
+					doc[1].disabled = false
+					doc[2].disabled = false
+					doc[3].disabled = false
+					doc[4].disabled = true
+					doc[5].disabled = true
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 3
+					} else if (pdoc.value == 0) {
+						pdoc.value = 1
+					}
+					break;
+				case 4:
+					doc[0].disabled = true
+					doc[1].disabled = false
+					doc[2].disabled = false
+					doc[3].disabled = false
+					doc[4].disabled = false
+					doc[5].disabled = true
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 4
+					} else if (pdoc.value == 0) {
+						pdoc.value = 1
+					}
+					break;
+				case 5:
+					doc[0].disabled = true
+					doc[1].disabled = false
+					doc[2].disabled = false
+					doc[3].disabled = false
+					doc[4].disabled = false
+					doc[5].disabled = false
+					if (pdoc.value > amountSelected) {
+						pdoc.value = 5
+					} else if (pdoc.value == 0) {
+						pdoc.value = 1
+					}
+					break;
+			}
+
+		}
+	}
+
+	setInterval (includeExclude, 1)
+
+	function find () {
+		if (document.getElementById ("results").style.display == "block") {
+			if (document.getElementsByClassName ("button submit")[0].innerHTML == "Correct Words") {
+				document.getElementsByClassName ("button submit")[0].innerHTML = "All Words"
+				document.getElementById("results").children[0].innerHTML = "Possible Answers"
+				matchingWords = correctWords
+				console.log ("changeToAll")
+			} else {
+				matchingWords = word
+				document.getElementsByClassName ("button submit")[0].innerHTML = "Correct Words"
+				document.getElementById("results").children[0].innerHTML = "Possible Words"
+			}
+		} else {
+			document.getElementsByClassName ("button submit")[0].innerHTML = "Correct Words"
+			document.getElementById("results").children[0].innerHTML = "Matching Possible Words"
+		}
+		document.getElementsByClassName ("button reset")[0].innerHTML = "Back"
+
+		property = []
+
+		for (i = 0; i<document.getElementById("allProperty").children.length; i++) {
+			outputProperty (i)
+		}
+
+		console.log (property)
+		
+		for (u = 0; u < property.length; u++) {
+			var trueSet = []
+			var falseSet = []
+			for (j = 0; j<7; j++){
+				if (property[u][j] === true) {
+					trueSet.push (j-1)
+				} else if (property[u][j] === false) {
+					falseSet.push (j-1)
+				}
+			}
+			if (trueSet != "") {
+				matchingWords = include (matchingWords, property[u][0], trueSet)
+
+			}
+			if (falseSet != ""){
+				matchingWords = exclude (matchingWords, property[u][0], falseSet)
+			}
+		}
+
+		for (k = 0; k < property.length; k++) {
+			matchingWords = amountInclude (matchingWords, property[k][0], property[k][1])
+		}
+
+		console.log (matchingWords)
+		document.getElementById ("results").style.display = "block"
+		
+		document.getElementById ("resultTable").innerHTML = tableMaker(matchingWords)
+		
+	}
+
+	function amountInclude (wordset, letter, amount) {
+		var returnVar = []
+		for (h = 0; h<wordset.length; h++) {
+			var isAmount = 0
+			for (w = 0; w<wordset[h].length; w++) {
+				console.log (isAmount)
+				if (wordset[h][w] == letter) {
+					isAmount++
+				}
+				if (isAmount >= amount) {
+					returnVar.push (wordset[h])
+					break;
+				}
+			}
+		}
+		return (returnVar)
+	}
+
+	function tableMaker (x) {
+		var returnTable = "<tr>"
+		for (n = 0; n<x.length; n++) {
+			if (n%3 == 0 && n%6 != 0 && n != 0) {
+				returnTable += "<tr>"
+			}
+			if (n%6 == 0) {
+				returnTable += "</tr>"
+			}
+			returnTable += "<td>" + x[n] + "</td>"
+		}
+		return (returnTable)
+	}
+
+	function outputProperty (x) {
+		property.push([document.getElementsByClassName("select letter")[x].value, document.getElementsByClassName("select amount")[x].value, isContain(document.getElementsByClassName("property")[x].children[2].style.backgroundColor), isContain (document.getElementsByClassName("property")[x].children[3].style.backgroundColor), isContain (document.getElementsByClassName("property")[x].children[4].style.backgroundColor), isContain(document.getElementsByClassName("property")[x].children[5].style.backgroundColor), isContain (document.getElementsByClassName("property")[x].children[6].style.backgroundColor)])
+	}
+
+	function isContain (x) {
+		if (x == "rgb(181, 159, 66)") {
+			return (false)
+		} else {
+			return (true)
+		}
+	}
+
+	function idAdder () {
+		for (i = 0; i<document.getElementsByClassName("remove").length; i++) {
+			document.getElementsByClassName("remove")[i].id = "remove" + i
+		}
+
+		for (i = 0; i<document.getElementsByClassName("position button").length; i++) {
+			document.getElementsByClassName("position button")[i].id = "positionButton" + i
+			if (document.getElementById ("positionButton" + i).style.backgroundColor == ""){
+				document.getElementById ("positionButton" + i).style.backgroundColor = "#b59f42"
+			}
+			console.log (document.getElementsByClassName("position")[i].style.backgroundColor)
+		}
+	}
+	idAdder()
+
+
+	function remove (x) {
+		var number
+		if (x[7] != undefined) {
+			number = x[7] + x[6]
+		} else {
+			number = x[6]
+		}
+		
+		document.getElementsByClassName ("property")[number].remove()
+		positionChange ()
+		idAdder ()
+	}
+
+	function positionVal (x) {
+		if (document.getElementById (x).style.backgroundColor == "rgb(181, 159, 66)") {
+			document.getElementById (x).style.backgroundColor = "#528d52"
+		} else {
+			document.getElementById (x).style.backgroundColor = "#b59f42"
+		}
+	}
+
+	function addProperty () {
+		document.getElementById ("allProperty").appendChild (newProperty)
+		idAdder()
+		positionChange ()
+
+		newProperty = document.getElementsByClassName ("property") [0].cloneNode(true)
+	}
+
+	function positionChange () {
+		for (i = 0; i<document.getElementsByClassName("property").length; i++) {
+			document.getElementsByClassName("property")[i].style.top = 190 + i*105 + "px"
+			if (i+1 == document.getElementsByClassName("property").length) {
+				document.getElementsByClassName("add")[0].style.top = 190 + (i+1)*105 + "px"
+				document.getElementsByClassName("add")[1].style.top = 190 + (i+1)*105 + "px"
+			}
+		}
+		if (document.getElementsByClassName("property").length == 0) {
+			document.getElementsByClassName("add")[0].style.top = "190px"
+			document.getElementsByClassName("add")[1].style.top = "190px"
+		}
+	}
+
+
+	
+
+
+	function include (wordset, letters, place) {
+		var returnVal = []
+		for (i = 0; i<wordset.length; i++) {
+			var checker = 0
+			for (j = 0; j<wordset[i].length; j++) {
+				if (wordset[i][j] == letters) {
+					if (place == null) {
+						checker = 1
+					} else {
+						for (k = 0; k<place.length; k++) {
+							if (place[k] - 1 == j) {
+								checker = 1
+								break
+							}
+						}
+					}
+				}
+				
+				if (j+1 == wordset[i].length && checker == 1) {
+					returnVal.push (i)
+				}
+			}
+		}
+		return (getWord(wordset, returnVal))
+	}
+
+	function exclude (wordset, letters, place) {
+		var returnVal = []
+		for (i = 0; i<wordset.length; i++) {
+			var checker = 1
+			for (j = 0; j<wordset[i].length; j++) {
+				if (wordset[i][j] == letters) {
+					if (place == null) {
+						checker = 0
+					} else {
+						for (k = 0; k<place.length; k++) {
+							if (place[k] - 1 == j) {
+								checker = 0
+								break
+							}
+						}
+					}
+				}
+				if (j+1 == wordset[i].length && checker == 1) {
+					returnVal.push (i)
+				}
+			}
+		}
+		return (getWord(wordset, returnVal))
+	}
+
+	function getWord (set, val) {
+		var returnSet = []
+		for (q = 0; q<val.length; q++) {
+			returnSet.push (set[val[q]])
+		}
+		return (returnSet)
+	}
+
+
+</script>
+
+
+
